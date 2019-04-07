@@ -43,8 +43,7 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
     for (int i = 0; i < Z; i++) {
         if (x < 1) {
             std::cout << "this is thread: " << omp_get_thread_num() << std::endl;
-            unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); //getting seed using time
-            std::mt19937 engine(seed);
+            std::mt19937 engine(std::chrono::system_clock::now().time_since_epoch().count()); //getting seed using time
             std::uniform_real_distribution<> uniform;
             x = 2; // x is private, so they should all do this if statement just once
         }
