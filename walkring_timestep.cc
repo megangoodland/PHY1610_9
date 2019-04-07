@@ -23,7 +23,6 @@
 //                   probability to just right.  (the probability to
 //                   stay on the same spot is thus 1-2p.)
 //
-//  r:               random number [0,1)
 //
 //
 //
@@ -36,9 +35,12 @@
 //
 void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob, double r)
 {
+    static std::mt19937 engine(13);
+    static std::uniform_real_distribution<> uniform;
     int Z = walkerpositions.size();
     // move all walkers
     for (int i = 0; i < Z; i++) {
+        double r = uniform(engine); // draws a random number
         if (r < prob) {
             // move to the right, respecting periodic boundaries
             walkerpositions[i]++;
