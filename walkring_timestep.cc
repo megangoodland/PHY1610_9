@@ -40,7 +40,9 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob)
 {   
     int nthreads = omp_get_num_threads();
     int Z = walkerpositions.size();
-
+    unsigned seed;
+    
+    
     // Start parallel, give all the threads their seeds. Each thread will run this first code separately.
     #pragma omp parallel default(none) shared(Z, walkerpositions, prob, N, std::cout) private(seed){
     std::cout << "this is thread: " << omp_get_thread_num() << std::endl;
