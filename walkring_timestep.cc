@@ -38,8 +38,8 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
     int Z = walkerpositions.size();
     #pragma omp parallel default(none) shared(Z, walkerpositions, prob, N, std::cout) 
     {
-        static std::mt19937 mt(std::chrono::system_clock::now().time_since_epoch().count()); // using clock to seed
-        static std::uniform_real_distribution<double> dist(0.0000, 1.0000); //[0,1)
+        static thread_local std::mt19937 mt(std::chrono::system_clock::now().time_since_epoch().count()); // using clock to seed
+        static thread_local std::uniform_real_distribution<double> dist(0.0000, 1.0000); //[0,1)
     #pragma omp for
     for (int i = 0; i < Z; i++) {
         double r = dist(mt); // drawing a random number
