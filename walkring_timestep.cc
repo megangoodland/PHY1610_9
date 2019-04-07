@@ -45,8 +45,8 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
     #pragma omp parallel default(none) shared(Z, walkerpositions, prob, N, std::cout, max_randp1) private(seed) 
     {
        // std::cout << "Hi from thread " << omp_get_thread_num() << std::endl;
-        std::random_device rd; // use random_device once to seed the random number generator named mt.
-        std::mt19937 mt(rd()); 
+        //std::random_device rd; // use random_device once to seed the random number generator named mt.
+        std::mt19937 mt(std::chrono::system_clock::now().time_since_epoch().count()); 
         std::uniform_real_distribution<double> dist(0.0000, 1.0000); //[0,1)
     #pragma omp for
     for (int i = 0; i < Z; i++) {
