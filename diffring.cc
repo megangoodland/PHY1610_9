@@ -11,6 +11,8 @@
 #include "diffring_output.h"
 #include "diffring_timestep.h"
 #include "parameters.h"
+#include <iostream>
+#include <omp.h>
 
 // the main function drives the simulation
 int main(int argc, char *argv[]) 
@@ -47,6 +49,20 @@ int main(int argc, char *argv[])
   // Setup initial time
   double time = 0.0;    
 
+  
+  // Testing parallel
+  int nthreads;
+  #pragma omp parallel default(none) shared(nthreads, std::cout)
+  #pragma omp single 
+  {
+  nthreads = omp_get_num_threads();
+  std::cout << "There were " << nthreads << " threads.\n";
+  }
+
+  
+  
+  
+  
   // Open a file for data output
   std::ofstream file;
   diffring_output_init(file, datafile);
