@@ -9,6 +9,7 @@
 #include <fstream>
 #include <rarray>
 #include <cmath>
+#include <random>
 #include "walkring_output.h"
 #include "walkring_timestep.h"
 #include "parameters.h"
