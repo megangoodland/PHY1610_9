@@ -39,13 +39,13 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
     int Z = walkerpositions.size();
     int x = 0;
     // Start parallel, give all the threads their seeds. 
-    #pragma omp parallel for default(none) shared(Z, walkerpositions, prob, N, std::cout) private(x) 
+    #pragma omp parallel for default(none) shared(Z, walkerpositions, prob, N, std::cout,std::mt19937,std::uniform_real_distribution) private(x) 
     for (int i = 0; i < Z; i++) {
         if (x < 1) {
             std::cout << "this is thread: " << omp_get_thread_num() << std::endl;
             unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); //getting seed using time
-            static std::mt19937 engine(seed);
-            static std::uniform_real_distribution<> uniform;
+            std::mt19937 engine(seed);
+            std::uniform_real_distribution<> uniform;
             x = 2; // x is private, so they should all do this if statement just once
         }
         double r = uniform(engine); // draws a random number
