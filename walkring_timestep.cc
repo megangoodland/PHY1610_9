@@ -5,6 +5,7 @@
 //
 
 #include "walkring_timestep.h"
+#include <omp.h>
 #include <random>
 #include <chrono>
 
