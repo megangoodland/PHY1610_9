@@ -54,9 +54,6 @@ int main(int argc, char *argv[])
 
   // Time evolution
   for (int step = 1; step <= numSteps; step++) {
-    static std::mt19937 engine(13);
-    static std::uniform_real_distribution<> uniform;
-    double r = uniform(engine); // draws a random number
     // Compute next time point
     walkring_timestep(w, N, p, r);
 
