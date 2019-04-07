@@ -10,7 +10,7 @@
 #include <random>
 #include <algorithm>
 #include <chrono>
-
+#include <stdlib.h>
 // Perform a single time step for the random walkers
 //
 // parameters:
@@ -38,16 +38,20 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
     //const nthreads = omp_get_num_threads();
     int Z = walkerpositions.size();
     int x = 0;
+    int max_rand = RAND_MAX; // getting RAND_MAX to pass to parallel
     // Start parallel, give all the threads their seeds. 
-    #pragma omp parallel for default(none) shared(Z, walkerpositions, prob, N, std::cout) private(x) 
+    #pragma omp parallel for default(none) shared(Z, walkerpositions, prob, N, std::cout, max_rand) private(x) 
     for (int i = 0; i < Z; i++) {
         if (x < 1) {
             std::cout << "this is thread: " << omp_get_thread_num() << std::endl;
-            std::mt19937 engine(std::chrono::system_clock::now().time_since_epoch().count()); //getting seed using time
-            std::uniform_real_distribution<> uniform;
+            unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+            //std::mt19937 engine(std::chrono::system_clock::now().time_since_epoch().count()); //getting seed using time
+            //std::uniform_real_distribution<> uniform;
             x = 2; // x is private, so they should all do this if statement just once
         }
-        double r = uniform(engine); // draws a random number
+        //double r = uniform(engine); // draws a random number
+        double n = rand_r(&seed); // get random number
+        double r = n/max_rand; // divide random number by the max random number
         if (r < prob) {
             // move to the right, respecting periodic boundaries
             walkerpositions[i]++;
