@@ -7,9 +7,9 @@ BLAS_INC?=.
 BLAS_LIB?=.
 
 CXX=g++
-CXXFLAGS=-O3 -g -march=native -std=c++11 -I${BLAS_INC}
+CXXFLAGS=-O3 -g -fopenmp -march=native -std=c++11 -I${BLAS_INC}
 LDFLAGS=-g -L${BLAS_LIB}
-LDLIBS=-lopenblas
+LDLIBS=-lopenblas -fopenmp
 LD=${CXX}
 
 .PHONY: all clean distclean run rundiffring runwalkring
