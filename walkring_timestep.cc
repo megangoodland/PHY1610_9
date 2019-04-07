@@ -43,7 +43,6 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
     // Start parallel, give all the threads their seeds. 
     #pragma omp parallel for default(none) shared(Z, walkerpositions, prob, N, std::cout, max_rand) private(x, seed) 
     for (int i = 0; i < Z; i++) {
-        std::cout << "x =  " << x << std::endl;
         if (x < 1) {
             std::cout << "I am in the if statement this is thread: " << omp_get_thread_num() << std::endl;
             seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -51,7 +50,6 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
             //std::uniform_real_distribution<> uniform;
             x = 2; // x is private, so they should all do this if statement just once
         }
-        std::cout << "I ignored the if statement " << omp_get_thread_num() << std::endl;
         //double r = uniform(engine); // draws a random number
         double n = rand_r(&seed); // get random number
         double r = n/max_rand; // divide random number by the max random number
