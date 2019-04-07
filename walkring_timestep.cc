@@ -50,6 +50,7 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
             //std::uniform_real_distribution<> uniform;
             x = 2; // x is private, so they should all do this if statement just once
         }
+        std::cout << "I am: " << omp_get_thread_num() << "my seed is: " << seed << std::endl;
         //double r = uniform(engine); // draws a random number
         double n = rand_r(&seed); // get random number
         double r = n/max_rand; // divide random number by the max random number
