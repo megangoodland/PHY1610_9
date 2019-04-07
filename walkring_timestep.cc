@@ -37,7 +37,7 @@
 void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
     int nthreads = omp_get_num_threads();
     int Z = walkerpositions.size();
-    int max_rand = RAND_MAX; // getting RAND_MAX to pass to parallel
+    double max_rand = RAND_MAX; // getting RAND_MAX to pass to parallel
    
     //rarray<int,1> seed_check(nthreads); // array saying whether or not they've gotten a seed
     //seed_check.fill(0);
@@ -51,7 +51,7 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
             //seed_check[omp_get_thread_num()] = 1; // each thread goes through this if statement once
        // double r = uniform(rand_r(&seed)); // draws a random number
         double n = rand_r(&seed); // get random number
-        double r = n/(max_rand+0.9999); // divide random number by the max random number
+        double r = n/(max_rand); // divide random number by the max random number
         if (r < prob) {
             // move to the right, respecting periodic boundaries
             walkerpositions[i]++;
