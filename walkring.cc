@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
   // Time evolution
   for (int step = 1; step <= numSteps; step++) {
     // Compute next time point
-    walkring_timestep(w, N, p, r);
+    walkring_timestep(w, N, p);
 
     // Update time
     time += dt;
