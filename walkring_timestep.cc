@@ -38,7 +38,7 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
     int nthreads = omp_get_num_threads();
     int Z = walkerpositions.size();
     int max_rand = RAND_MAX; // getting RAND_MAX to pass to parallel
-    std::cout << "This is what RAND_MAX is: " << max_rand << std::endl;
+   
     //rarray<int,1> seed_check(nthreads); // array saying whether or not they've gotten a seed
     //seed_check.fill(0);
     unsigned int seed;
