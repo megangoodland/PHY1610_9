@@ -42,15 +42,23 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
     //seed_check.fill(0);
     unsigned int seed;
     // Start parallel, give all the threads their seeds. 
-    #pragma omp parallel for default(none) shared(Z, walkerpositions, prob, N, std::cout, max_randp1) private(seed) 
+    #pragma omp parallel default(none) shared(Z, walkerpositions, prob, N, std::cout, max_randp1) private(seed) 
+    {
+        std::cout << "Hi from thread " << omp_get_thread_num() << std::endl;
+        std::random_device rd; // use random_device once to seed the random number generator named mt.
+        std::mt19937 mt(rd()); 
+        std::uniform_real_distribution<double> dist(0.0000, 1.0000); //[0,1)
+    #pragma omp for
     for (int i = 0; i < Z; i++) {
-        seed = std::chrono::system_clock::now().time_since_epoch().count();
+        //seed = std::chrono::system_clock::now().time_since_epoch().count();
             //std::mt19937 engine(std::chrono::system_clock::now().time_since_epoch().count()); //getting seed using time
-        std::uniform_real_distribution<> uniform;
+        //std::uniform_real_distribution<> uniform;
             //seed_check[omp_get_thread_num()] = 1; // each thread goes through this if statement once
        // double r = uniform(rand_r(&seed)); // draws a random number
-        double n = rand_r(&seed); // get random number
-        double r = n/(max_randp1); // divide random number by the max random number+1
+
+        //double n = rand_r(&seed); // get random number
+        //double r = n/(max_randp1); // divide random number by the max random number+1
+        double r = dist(mt);
         if (r < prob) {
             // move to the right, respecting periodic boundaries
             walkerpositions[i]++;
@@ -66,6 +74,7 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
             // walkerposition remains unchanged
         }
     
+    }
     }
 }
 
