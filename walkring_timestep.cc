@@ -6,6 +6,7 @@
 
 #include "walkring_timestep.h"
 #include <random>
+#include <chrono>
 
 // Perform a single time step for the random walkers
 //
@@ -35,7 +36,8 @@
 //
 void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob, double r)
 {
-    static std::mt19937 engine(13);
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); //getting seed using time
+    static std::mt19937 engine(seed);
     static std::uniform_real_distribution<> uniform;
     int Z = walkerpositions.size();
     // move all walkers
