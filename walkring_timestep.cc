@@ -34,7 +34,7 @@
 //  have been given a chance to move on position to the left or two
 //  the right).
 //
-void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob, double r)
+void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob)
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); //getting seed using time
     static std::mt19937 engine(seed);
