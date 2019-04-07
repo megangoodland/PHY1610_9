@@ -8,6 +8,7 @@
 #include <omp.h>
 #include <iostream>
 #include <random>
+#include <algorithm>
 #include <chrono>
 
 // Perform a single time step for the random walkers
@@ -26,9 +27,6 @@
 //                   probability to just right.  (the probability to
 //                   stay on the same spot is thus 1-2p.)
 //
-//
-//
-//
 // output:
 //
 //  the content of the walkerpositions arrays should have changed to
@@ -37,14 +35,11 @@
 //  the right).
 //
 void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
- 
-    const nthreads = omp_get_num_threads();
-    const Z = walkerpositions.size();
+    //const nthreads = omp_get_num_threads();
+    int Z = walkerpositions.size();
     int x = 0;
     // Start parallel, give all the threads their seeds. 
-    #pragma omp parallel for default(none) shared(Z, walkerpositions, prob, N, std::cout, std::endl) private(x){
-    // move all walkers -- do the random number process once for each thread
-    
+    #pragma omp parallel for default(none) shared(Z, walkerpositions, prob, N, std::cout, std::endl) private(x) 
     for (int i = 0; i < Z; i++) {
         if (x < 1) {
             std::cout << "this is thread: " << omp_get_thread_num() << std::endl;
@@ -69,7 +64,7 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob) {
             // walkerposition remains unchanged
         }
 
-    }
+    
     }
 }
 
