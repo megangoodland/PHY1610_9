@@ -37,7 +37,7 @@
 //  the right).
 //
 void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob)
-{   
+ 
     int nthreads = omp_get_num_threads();
     int Z = walkerpositions.size();
     unsigned seed;
@@ -70,7 +70,7 @@ void walkring_timestep(rarray<int,1>& walkerpositions, int N, double prob)
         } else {
             // walkerposition remains unchanged
         }
-    }
+
     }
 }
 
